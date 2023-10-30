@@ -8,6 +8,9 @@ document.getElementById('darkModeToggle').addEventListener('click', function () 
     const moonIcon = document.querySelector('#darkModeToggle i.fa-moon');
     // const gitIcon = document.querySelector('.git');
 
+    const lightImage = document.getElementById('lightImage');
+    const darkImage = document.getElementById('darkImage');
+
     
     if (currentTheme === 'dark') {
         htmlElement.setAttribute('data-bs-theme', 'light');
@@ -24,10 +27,28 @@ document.getElementById('darkModeToggle').addEventListener('click', function () 
             element.classList.remove('text-white');
             element.classList.add('text-secondary');
         });
+
+        const elements = document.querySelectorAll('[class*="warning"]');
+        elements.forEach(element => {
+        const classes = element.getAttribute('class').split(' ');
+
+        const newClasses = classes.map(className => {
+            if (className.includes('warning')) {
+            return className.replace('warning', 'primary');
+            }
+            return className;
+        });
+
+        element.setAttribute('class', newClasses.join(' '));
+        });
+
         
         // Affichez l'icône du soleil et masquez l'icône de la lune
         moonIcon.classList.remove('d-none');
         sunIcon.classList.add('d-none');
+
+        lightImage.classList.remove('d-none');
+        darkImage.classList.add('d-none');
         
     } else {
         htmlElement.setAttribute('data-bs-theme', 'dark');
@@ -37,6 +58,24 @@ document.getElementById('darkModeToggle').addEventListener('click', function () 
             element.classList.remove('bg-light');
             element.classList.add('bg-dark-subtle');
         })
+
+        
+        
+        const elements = document.querySelectorAll('[class*="primary"]');
+        elements.forEach(element => {
+        const classes = element.getAttribute('class').split(' ');
+
+        const newClasses = classes.map(className => {
+            if (className.includes('primary')) {
+            return className.replace('primary', 'warning');
+            }
+            return className;
+        });
+
+        element.setAttribute('class', newClasses.join(' '));
+        });
+
+
         const secondaryTextElements = document.querySelectorAll('.text-secondary');
         secondaryTextElements.forEach(element => {
             element.classList.remove('text-secondary');
@@ -48,6 +87,9 @@ document.getElementById('darkModeToggle').addEventListener('click', function () 
         // Affichez l'icône de la lune et masquez l'icône du soleil
         sunIcon.classList.remove('d-none');
         moonIcon.classList.add('d-none');
+
+        lightImage.classList.add('d-none');
+        darkImage.classList.remove('d-none');
     }
 });
 
